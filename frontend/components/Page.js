@@ -16,12 +16,12 @@ const GlobalStyles = createGlobalStyle`
       --grey: #3a3a3a;
       --gray: var(--grey);
       --lightGrey: #e1e1e1;
-      --lightGray: var(----lightGrey);
+      --lightGray: var(--lightGrey);
       --offWhite: #ededed;
       --maxWidth: 1000px;
       --bs: 0 12px 24px rgba(0,0,0,0.09);
       box-sizing: border-box;
-      font-size: 62.5%; /* better default for 10px because user can override in browser settings */
+      font-size: 62.5%; /* better default for 10px because user can override in browser */
   }
   *, *:before, *:after {
     box-sizing: inherit;
