@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
+import Router from 'next/router';
 import Form from './styles/Form';
 import DisplayError from './ErrorMessage';
 import useForm from '../lib/useForm';
@@ -61,7 +62,10 @@ export default function UpdateProduct({ id }) {
             description: inputs.description,
             // TODO: pass in updates to product here
           },
-        }).catch(console.error);
+        });
+        Router.push({
+          pathname: `/product/${res.data.updateProduct.id}`,
+        });
         console.log({ res });
         // // submit the input fields to the backend
         // const res = await createProduct();
@@ -81,7 +85,7 @@ export default function UpdateProduct({ id }) {
             id="name"
             name="name"
             placeholder="Name"
-            value={inputs.name}
+            value={inputs.name || ''}
             onChange={handleChange}
           />
         </label>
@@ -92,7 +96,7 @@ export default function UpdateProduct({ id }) {
             id="price"
             name="price"
             placeholder="Price"
-            value={inputs.price}
+            value={inputs.price || ''}
             onChange={handleChange}
           />
         </label>
@@ -102,7 +106,7 @@ export default function UpdateProduct({ id }) {
             id="description"
             name="description"
             placeholder="Description"
-            value={inputs.description}
+            value={inputs.description || ''}
             onChange={handleChange}
           />
         </label>
