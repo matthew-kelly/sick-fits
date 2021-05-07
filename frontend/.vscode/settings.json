@@ -26,9 +26,11 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "prettier.disableLanguages": [
-    "javascript",
-    "javascriptreact"
-  ],
-  "peacock.color": "#FFC600"
+  "prettier.disableLanguages": ["javascript", "javascriptreact"],
+  "peacock.color": "#FFC600",
+  "search.exclude": {
+    "**/.next": true,
+    "**/.vscode": true,
+    "package-lock.json": true
+  }
 }
