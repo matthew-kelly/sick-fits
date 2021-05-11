@@ -5,6 +5,7 @@ import Form from './styles/Form';
 import useForm from '../lib/useForm';
 import { CURRENT_USER_QUERY } from './User';
 import DisplayError from './ErrorMessage';
+import { SIGNIN_MUTATION } from './SignIn';
 
 const RESET_MUTATION = gql`
   mutation RESET_MUTATION(
@@ -45,10 +46,19 @@ export default function Reset({ token }) {
     ? data?.redeemUserPasswordResetToken
     : undefined;
 
+  const [signin] = useMutation(SIGNIN_MUTATION, {
+    variables: inputs,
+    // refetch the currently logged in user
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
+  });
+
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log({ inputs });
-    const res = await resetPassword().catch(console.error);
+    await resetPassword()
+      .then((res) => {
+        signin();
+      })
+      .catch(console.error);
     resetForm();
     // TODO: sign in user and redirect to home page
   }
@@ -71,7 +81,6 @@ export default function Reset({ token }) {
       }}
     >
       <DisplayError error={error || submitError || passwordErrorMessage} />
-      <DisplayError error={error} />
       <h2>Reset Your Password</h2>
       <p>Password must be at least 8 characters long.</p>
       <fieldset>
