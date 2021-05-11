@@ -50,7 +50,7 @@ export default function SignIn() {
     <Form method="POST" onSubmit={handleSubmit}>
       <DisplayError error={signinError} />
       <h2>Sign Into Your Account</h2>
-      <fieldset>
+      <fieldset disabled={loading} aria-busy={loading}>
         <label htmlFor="email">
           Email
           <input

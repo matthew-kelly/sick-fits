@@ -83,7 +83,7 @@ export default function Reset({ token }) {
       <DisplayError error={error || submitError || passwordErrorMessage} />
       <h2>Reset Your Password</h2>
       <p>Password must be at least 8 characters long.</p>
-      <fieldset>
+      <fieldset disabled={loading} aria-busy={loading}>
         {data?.redeemUserPasswordResetToken === null && (
           <p>Success! Your password has been updated.</p>
         )}
