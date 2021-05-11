@@ -4,6 +4,7 @@ import Form from './styles/Form';
 import useForm from '../lib/useForm';
 import { CURRENT_USER_QUERY } from './User';
 import DisplayError from './ErrorMessage';
+import { SIGNIN_MUTATION } from './SignIn';
 
 const SIGNUP_MUTATION = gql`
   mutation SIGNUP_MUTATION(
@@ -23,19 +24,25 @@ export default function SignUp() {
   const { inputs, handleChange, resetForm } = useForm({
     email: '',
     name: '',
-    password: '', // TODO:
+    password: '',
   });
   const [signup, { data, error, loading }] = useMutation(SIGNUP_MUTATION, {
     variables: inputs,
+  });
+  const [signin, { signinData }] = useMutation(SIGNIN_MUTATION, {
+    variables: inputs,
     // refetch the currently logged in user
-    // refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    refetchQueries: [{ query: CURRENT_USER_QUERY }],
   });
   async function handleSubmit(e) {
     e.preventDefault();
     // Send the email and password to the GraphQL API
-    const res = await signup().catch(console.error); // TODO: return better error for signup failure (plain english)
+    await signup()
+      .then((res) => {
+        signin();
+      })
+      .catch(console.error); // TODO: return better error for signup failure (plain english)
     resetForm();
-    // TODO: redirect to home page
   }
   return (
     <Form method="POST" onSubmit={handleSubmit}>
@@ -43,10 +50,7 @@ export default function SignUp() {
       <h2>Sign Up For an Account</h2>
       <fieldset>
         {data?.createUser && (
-          <p>
-            Signed up with {data.createUser.email} - Please go ahead and sign
-            in!
-          </p>
+          <p>Welcome to Sick Fits, {data.createUser.name}!</p>
         )}
         <label htmlFor="name">
           Name
