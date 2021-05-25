@@ -58,7 +58,7 @@ async function checkout(
     return tally + cartItem.quantity * cartItem.product.price;
   },
   0);
-  console.log(amount);
+  console.log('amount:', amount);
   // create the charge with the stripe library
   const charge = await stripeConfig.paymentIntents
     .create({
@@ -71,16 +71,18 @@ async function checkout(
       console.log(err);
       throw new Error(err.message);
     });
-  console.log(charge);
+  console.log('charge: ', charge);
+  console.log('cartItems', cartItems);
   // convert the cart items to order items
   const orderItems = cartItems.map((cartItem) => {
     const orderItem = {
       name: cartItem.product.name,
       description: cartItem.product.description,
       price: cartItem.product.price,
-      quantity: cartItem.product.quantity,
+      quantity: cartItem.quantity,
       photo: { connect: { id: cartItem.product.photo.id } },
     };
+    console.log('orderItem.quantity', orderItem.quantity);
     return orderItem;
   });
   // create the order and return it
