@@ -5,6 +5,7 @@ import ItemStyles from './styles/ItemStyles';
 import formatMoney from '../lib/formatMoney';
 import DeleteProduct from './DeleteProduct';
 import AddToCart from './AddToCart';
+import GatedSignInWrapper from './GatedSignInWrapper';
 
 export default function Product({ product }) {
   return (
@@ -18,20 +19,22 @@ export default function Product({ product }) {
       </Title>
       <PriceTag>{formatMoney(product.price)}</PriceTag>
       <p>{product.description}</p>
-      <div className="buttonList">
-        <Link
-          href={{
-            pathname: '/update',
-            query: {
-              id: product.id,
-            },
-          }}
-        >
-          Edit
-        </Link>
-        <AddToCart id={product.id} />
-        <DeleteProduct id={product.id}>Delete</DeleteProduct>
-      </div>
+      <GatedSignInWrapper>
+        <div className="buttonList">
+          <Link
+            href={{
+              pathname: '/update',
+              query: {
+                id: product.id,
+              },
+            }}
+          >
+            Edit
+          </Link>
+          <AddToCart id={product.id} />
+          <DeleteProduct id={product.id}>Delete</DeleteProduct>
+        </div>
+      </GatedSignInWrapper>
     </ItemStyles>
   );
 }
