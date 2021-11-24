@@ -16,12 +16,12 @@ export const PAGINATION_QUERY = gql`
 
 export default function Pagination({ page }) {
   const { data, error, loading } = useQuery(PAGINATION_QUERY);
-  if (loading) return null; // TODO: replace with loading state
+  if (loading) return 'Loading...';
   if (error) return <DisplayError error={error} />; // TODO: replace with proper error
   const { count } = data._allProductsMeta;
   const pageCount = Math.ceil(count / perPage);
   return (
-    <PaginationStyles>
+    <PaginationStyles data-testid="pagination">
       <Head>
         <title>
           Sick Fits - Page {page} of {pageCount}
