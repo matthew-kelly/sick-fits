@@ -38,9 +38,9 @@ export default function SignUp() {
     e.preventDefault();
     // Send the email and password to the GraphQL API
     await signup()
-      .then((res) => {
-        signin();
-      })
+      // .then(async (res) => {
+      //   await signin();
+      // })
       .catch(console.error); // TODO: return better error for signup failure (plain english)
     resetForm();
   }
@@ -86,8 +86,10 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Sign In</button>
+        <button type="submit">Sign Up</button>
       </fieldset>
     </Form>
   );
 }
+
+export { SIGNUP_MUTATION };
